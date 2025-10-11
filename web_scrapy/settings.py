@@ -2,8 +2,8 @@
 
 BOT_NAME = 'web_scraper'
 
-SPIDER_MODULES = ['scrapy.spiders']
-NEWSPIDER_MODULE = 'scrapy.spiders'
+SPIDER_MODULES = ['web_scrapy.spiders']
+NEWSPIDER_MODULE = 'web_scrapy.spiders'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
@@ -34,17 +34,17 @@ DEFAULT_REQUEST_HEADERS = {
 
 # Enable or disable spider middlewares
 SPIDER_MIDDLEWARES = {
-    'scrapy.middlewares.SpiderMiddleware': 543,
+    'web_scrapy.middlewares.SpiderMiddleware': 543,
 }
 
 # Enable or disable downloader middlewares
 DOWNLOADER_MIDDLEWARES = {
-    'scrapy.middlewares.DownloaderMiddleware': 543,
+    'web_scrapy.middlewares.DownloaderMiddleware': 543,
 }
 
 # Configure item pipelines
 ITEM_PIPELINES = {
-    'scrapy.pipelines.HTMLSaverPipeline': 300,
+    'web_scrapy.pipelines.HTMLSaverPipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -59,7 +59,7 @@ HTTPCACHE_ENABLED = True
 HTTPCACHE_EXPIRATION_SECS = 0
 HTTPCACHE_DIR = 'httpcache'
 HTTPCACHE_IGNORE_HTTP_CODES = []
-HTTPCACHE_STORAGE = 'scrapy.httpcache.FilesystemCacheStorage'
+HTTPCACHE_STORAGE = 'web_scrapy.httpcache.FilesystemCacheStorage'
 
 # Set settings whose default value is deprecated to a future-proof value
 REQUEST_FINGERPRINTER_IMPLEMENTATION = '2.7'

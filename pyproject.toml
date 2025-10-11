@@ -13,7 +13,7 @@ dependencies = [
     "ruff (>=0.13.3,<0.14.0)",
     "mypy (>=1.18.2,<2.0.0)",
     "markdownify (>=1.2.0,<2.0.0)",
-    "scrapy (>=2.13.3,<3.0.0)"
+    "scrapy (>=2.13.3,<3.0.0)",
 ]
 
 
@@ -21,6 +21,8 @@ dependencies = [
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
+[tool.poetry]
+package-mode = false
 
 [[tool.poetry.source]]
 name = "aliyun"

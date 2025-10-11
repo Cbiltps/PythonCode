@@ -16,17 +16,17 @@
 
 ```bash
 # 爬取指定网站
-python scrapy/simple_scraper.py https://example.com
+python web_scrapy/simple_scraper.py https://example.com
 
 # 也可以不加协议，程序会自动添加https://
-python scrapy/simple_scraper.py baidu.com
+python web_scrapy/simple_scraper.py baidu.com
 ```
 
 ### 方法二：使用Scrapy框架
 
 ```bash
 # 爬取指定网站
-python scrapy/scraper.py https://example.com
+python web_scrapy/scraper_test.py https://example.com
 ```
 
 ## 输出

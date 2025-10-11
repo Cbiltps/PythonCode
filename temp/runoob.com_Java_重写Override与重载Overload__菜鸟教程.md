@@ -119,7 +119,7 @@ Java 高级教程
 
 [Java 多态](http://www.runoob.com/java/java-polymorphism.html)
 
-[![](https://static.char123.com/images/re/qoder-202509-6.png)](https://qoder.com/)
+[![](https://static.char123.com/images/re/qoder-202510-1.png)](https://qoder.com/)
 
 Java 重写(Override)与重载(Overload)
 ==============================

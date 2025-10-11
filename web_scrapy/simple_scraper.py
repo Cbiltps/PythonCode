@@ -9,7 +9,7 @@ from urllib.parse import urlparse
 import sys
 
 # URL 配置入口：将要爬取的网站写在这里
-TARGET_URL_SIMPLE = 'https://mp.weixin.qq.com/s/8Gr__biKvaiaJqAu-8k6Ag'  # 修改为你要爬取的网页URL
+TARGET_URL_SIMPLE = 'https://www.dianping.com/shop/k3ZbV7SZiJdS33o8'  # 修改为你要爬取的网页URL
 
 
 def clean_filename(title, url):

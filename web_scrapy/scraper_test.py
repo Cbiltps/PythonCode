@@ -16,7 +16,7 @@ sys.path.append(current_dir)
 from spider import WebSpider
 
 # URL 配置入口：将要爬取的网站写在这里
-TARGET_URL = 'https://giphy.com/'  # 修改为你要爬取的网页URL
+TARGET_URL = 'https://www.runoob.com/java/java-override-overload.html'  # 修改为你要爬取的网页URL
 
 
 def scrape_website(url):
@@ -26,14 +26,9 @@ def scrape_website(url):
     Args:
         url (str): 要爬取的网站URL
     """
-    # 获取项目设置
-    settings = get_project_settings()
-    
-    # 更新设置，指向我们的模块
-    settings.update({
+    # 创建自定义设置，不使用项目设置以避免模块路径问题
+    settings = {
         'BOT_NAME': 'web_scraper',
-        'SPIDER_MODULES': [current_dir],
-        'NEWSPIDER_MODULE': current_dir,
         'ROBOTSTXT_OBEY': False,
         'DOWNLOAD_DELAY': 1,
         'DEFAULT_REQUEST_HEADERS': {
@@ -45,7 +40,7 @@ def scrape_website(url):
             'pipelines.HTMLSaverPipeline': 300,
         },
         'LOG_LEVEL': 'INFO',
-    })
+    }
     
     # 创建爬虫进程
     process = CrawlerProcess(settings)
