@@ -3,7 +3,7 @@ name = "pythoncode"
 version = "0.1.0"
 description = ""
 authors = [
-    {name = "lichengxiang",email = "1239669254@qq.com"}
+    { name = "lichengxiang", email = "1239669254@qq.com" }
 ]
 readme = "README.md"
 requires-python = ">=3.12,<4.0"
