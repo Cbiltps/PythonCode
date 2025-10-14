@@ -4,13 +4,13 @@
 """
 
 import os
-import requests
 from urllib.parse import urlparse
 
+from requests import get, exceptions
+import zstandard as zstd
+
 # URL 配置入口：将要爬取的网站写在这里
-TARGET_URL_SIMPLE = (
-    "https://www.dianping.com/shop/k3ZbV7SZiJdS33o8"  # 修改为你要爬取的网页URL
-)
+TARGET_URL_SIMPLE = "https://console.huaweicloud.com/obs/?region=cn-north-9&locale=zh-cn#/obs/manage/no9ai-obs/object/list?prefix=files%2F"  # 修改为你要爬取的网页URL
 
 
 def clean_filename(title, url):
@@ -57,11 +57,28 @@ def scrape_simple(url):
         print(f"正在爬取: {url}")
 
         # 发送请求
-        response = requests.get(url, headers=headers, timeout=30)
+        response = get(url, headers=headers, timeout=30)
         response.raise_for_status()
 
+        # 查看响应头中的 Content-Encoding
+        encoding = response.headers.get("Content-Encoding")
+        print("Content-Encoding: ", encoding)
+
         # 获取HTML内容
-        html_content = response.text
+        html_content = None
+        # 根据编码类型进行解压缩处理
+        if encoding == "gzip":
+            html_content = response.text
+        elif encoding == "deflate":
+            html_content = response.text
+        elif encoding == "br":
+            html_content = response.text
+        elif encoding == "zstd":
+            dctx = zstd.ZstdDecompressor()
+            decompressed_data = dctx.decompress(response.content)
+            html_content = decompressed_data.decode("utf-8")
+        else:
+            html_content = response.text
 
         # 尝试从HTML中提取标题
         title = ""
@@ -91,7 +108,7 @@ def scrape_simple(url):
 
         return True
 
-    except requests.exceptions.RequestException as e:
+    except exceptions.RequestException as e:
         print(f"❌ 请求错误: {e}")
         return False
     except Exception as e:
