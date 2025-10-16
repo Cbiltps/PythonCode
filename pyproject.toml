@@ -16,6 +16,7 @@ dependencies = [
     "scrapy (>=2.13.3,<3.0.0)",
     "zstandard (>=0.25.0,<0.26.0)",
     "brotli (>=1.1.0,<2.0.0)",
+    "langchain-qdrant (>=0.2.1,<0.3.0)",
 ]
 
 

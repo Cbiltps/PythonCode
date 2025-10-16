@@ -10,7 +10,7 @@ from requests import get, exceptions
 import zstandard as zstd
 
 # URL 配置入口：将要爬取的网站写在这里
-TARGET_URL_SIMPLE = "https://console.huaweicloud.com/obs/?region=cn-north-9&locale=zh-cn#/obs/manage/no9ai-obs/object/list?prefix=files%2F"  # 修改为你要爬取的网页URL
+TARGET_URL_SIMPLE = "http://www.duitang123.com/"  # 修改为你要爬取的网页URL
 
 
 def clean_filename(title, url):
@@ -110,6 +110,7 @@ def scrape_simple(url):
 
     except exceptions.RequestException as e:
         print(f"❌ 请求错误: {e}")
+        print()
         return False
     except Exception as e:
         print(f"❌ 保存文件时出错: {e}")
