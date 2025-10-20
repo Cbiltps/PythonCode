@@ -80,7 +80,7 @@ def main():
     # 设置路径
     current_dir = Path(__file__).parent.parent  # 获取项目根目录
     html_dir = current_dir / "html"  # HTML文件目录
-    output_dir = current_dir / "temp"  # 输出目录
+    output_dir = current_dir / "markdown"  # 输出目录
 
     print("HTML to Markdown 转换器")
     print("=" * 50)
