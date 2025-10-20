@@ -15,9 +15,7 @@ sys.path.append(current_dir)
 from spider import WebSpider
 
 # URL 配置入口：将要爬取的网站写在这里
-TARGET_URL = (
-    "https://www.runoob.com/java/java-override-overload.html"  # 修改为你要爬取的网页URL
-)
+TARGET_URL = "mp.weixin.qq.com/s/RAex20Ynj3K9037Xp5FhmQ"  # 修改为你要爬取的网页URL
 
 
 def scrape_website(url):

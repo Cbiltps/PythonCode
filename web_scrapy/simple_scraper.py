@@ -10,7 +10,9 @@ from requests import get, exceptions
 import zstandard as zstd
 
 # URL 配置入口：将要爬取的网站写在这里
-TARGET_URL_SIMPLE = "http://www.duitang123.com/"  # 修改为你要爬取的网页URL
+TARGET_URL_SIMPLE = (
+    "https://mp.weixin.qq.com/s/RAex20Ynj3K9037Xp5FhmQ"  # 修改为你要爬取的网页URL
+)
 
 
 def clean_filename(title, url):
