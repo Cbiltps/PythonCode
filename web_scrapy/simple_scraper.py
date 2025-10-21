@@ -5,7 +5,6 @@
 
 import os
 from urllib.parse import urlparse, urljoin
-import re
 
 from requests import get, exceptions
 import zstandard as zstd
@@ -14,7 +13,7 @@ from markdownify import markdownify as md
 
 # URL 配置入口：将要爬取的网站写在这里
 TARGET_URL_SIMPLE = (
-    "https://www.runoob.com/java/java-override-overload.html"  # 修改为你要爬取的网页URL
+    "https://mp.weixin.qq.com/s/20kfP4iflxqL9CwTmlgtwQ"  # 修改为你要爬取的网页URL
 )
 
 
@@ -57,9 +56,9 @@ def download_image(img_url, save_dir, index, headers):
         # 从URL中提取原始文件名
         parsed_url = urlparse(img_url)
         original_filename = os.path.basename(parsed_url.path)
-        
+
         # 如果URL路径没有文件名，使用默认名称
-        if not original_filename or '.' not in original_filename:
+        if not original_filename or "." not in original_filename:
             # 从Content-Type获取扩展名
             content_type = response.headers.get("Content-Type", "")
             if "jpeg" in content_type or "jpg" in content_type:
@@ -76,7 +75,7 @@ def download_image(img_url, save_dir, index, headers):
         else:
             # 清理文件名中的特殊字符
             original_filename = clean_filename(original_filename, img_url)
-        
+
         # 检查文件是否已存在，如果存在则添加序号
         filepath = os.path.join(save_dir, original_filename)
         if os.path.exists(filepath):
@@ -154,7 +153,9 @@ def extract_and_download_images(html_content, base_url, headers):
     return success_count, img_url_to_filename
 
 
-def convert_html_to_markdown_with_local_images(html_content, base_url, img_url_mapping, output_path):
+def convert_html_to_markdown_with_local_images(
+    html_content, base_url, img_url_mapping, output_path
+):
     """
     将HTML转换为Markdown，并将图片URL替换为本地路径
 
@@ -170,11 +171,11 @@ def convert_html_to_markdown_with_local_images(html_content, base_url, img_url_m
     try:
         # 使用BeautifulSoup解析HTML，替换图片URL
         soup = BeautifulSoup(html_content, "html.parser")
-        
+
         # 替换所有img标签的src属性
         img_tags = soup.find_all("img")
         replaced_count = 0
-        
+
         for img in img_tags:
             # 尝试多个可能的属性
             for attr in ["src", "data-src", "data-original", "data-lazy-src"]:
@@ -182,33 +183,40 @@ def convert_html_to_markdown_with_local_images(html_content, base_url, img_url_m
                 if img_url and isinstance(img_url, str):
                     # 转换为绝对URL
                     absolute_url = urljoin(base_url, img_url)
-                    
+
                     # 如果这个URL在映射中，替换为本地路径
-                    if absolute_url in img_url_mapping and img_url_mapping[absolute_url]:
+                    if (
+                        absolute_url in img_url_mapping
+                        and img_url_mapping[absolute_url]
+                    ):
                         local_filename = img_url_mapping[absolute_url]
                         # 使用相对路径：../images/filename
                         local_path = f"../images/{local_filename}"
                         img["src"] = local_path
                         # 清除其他懒加载属性
-                        for remove_attr in ["data-src", "data-original", "data-lazy-src"]:
+                        for remove_attr in [
+                            "data-src",
+                            "data-original",
+                            "data-lazy-src",
+                        ]:
                             if img.get(remove_attr):
                                 del img[remove_attr]
                         replaced_count += 1
                         break
-        
+
         print(f"\n🔄 替换了 {replaced_count} 个图片链接为本地路径")
-        
+
         # 将修改后的HTML转换为Markdown
         modified_html = str(soup)
         markdown_content = md(modified_html, heading_style="ATX")
-        
+
         # 保存Markdown文件
         with open(output_path, "w", encoding="utf-8") as f:
             f.write(markdown_content)
-        
+
         print(f"✅ 成功转换为Markdown: {output_path}")
         return True
-        
+
     except Exception as e:
         print(f"❌ 转换Markdown失败: {e}")
         return False
@@ -290,19 +298,25 @@ def scrape_simple(url):
 
         # 下载页面中的所有图片
         print("\n🖼️  开始下载图片...")
-        img_count, img_url_mapping = extract_and_download_images(html_content, url, headers)
+        img_count, img_url_mapping = extract_and_download_images(
+            html_content, url, headers
+        )
         print(f"\n✅ 成功下载 {img_count} 张图片到 images/ 文件夹")
 
         # 转换为Markdown
         print("\n📝 开始转换为Markdown...")
-        markdown_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "markdown")
+        markdown_dir = os.path.join(
+            os.path.dirname(os.path.dirname(__file__)), "markdown"
+        )
         os.makedirs(markdown_dir, exist_ok=True)
-        
+
         # 生成Markdown文件名（与HTML同名，但扩展名为.md）
         md_filename = filename.replace(".html", ".md")
         md_path = os.path.join(markdown_dir, md_filename)
-        
-        convert_html_to_markdown_with_local_images(html_content, url, img_url_mapping, md_path)
+
+        convert_html_to_markdown_with_local_images(
+            html_content, url, img_url_mapping, md_path
+        )
 
         return True
 
