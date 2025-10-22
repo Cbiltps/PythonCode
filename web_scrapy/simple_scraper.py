@@ -4,12 +4,12 @@
 """
 
 import os
-from urllib.parse import urlparse, urljoin
+from urllib.parse import urljoin, urlparse
 
-from requests import get, exceptions
+import markdownify
+import requests
 import zstandard as zstd
 from bs4 import BeautifulSoup
-from markdownify import markdownify as md
 
 # URL 配置入口：将要爬取的网站写在这里
 TARGET_URL_SIMPLE = (
@@ -50,7 +50,7 @@ def download_image(img_url, save_dir, index, headers):
         str: 成功返回本地文件名，失败返回None
     """
     try:
-        response = get(img_url, headers=headers, timeout=30)
+        response = requests.get(img_url, headers=headers, timeout=30)
         response.raise_for_status()
 
         # 从URL中提取原始文件名
@@ -208,7 +208,7 @@ def convert_html_to_markdown_with_local_images(
 
         # 将修改后的HTML转换为Markdown
         modified_html = str(soup)
-        markdown_content = md(modified_html, heading_style="ATX")
+        markdown_content = markdownify.markdownify(modified_html, heading_style="ATX")
 
         # 保存Markdown文件
         with open(output_path, "w", encoding="utf-8") as f:
@@ -247,7 +247,7 @@ def scrape_simple(url):
         print(f"正在爬取: {url}")
 
         # 发送请求
-        response = get(url, headers=headers, timeout=30)
+        response = requests.get(url, headers=headers, timeout=30)
         response.raise_for_status()
 
         # 查看响应头中的 Content-Encoding
@@ -320,7 +320,7 @@ def scrape_simple(url):
 
         return True
 
-    except exceptions.RequestException as e:
+    except requests.exceptions.RequestException as e:
         print(f"❌ 请求错误: {e}")
         print()
         return False
