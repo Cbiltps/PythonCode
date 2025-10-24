@@ -12,7 +12,7 @@ import zstandard as zstd
 from bs4 import BeautifulSoup
 
 # URL 配置入口：将要爬取的网站写在这里
-TARGET_URL_SIMPLE = "https://inteltrip.feishu.cn/wiki/SBZCwV1Gxi7wC4k3YeAcjf4dnYA"  # 修改为你要爬取的网页URL
+TARGET_URL_SIMPLE = "https://thinkingme.ai/"  # 修改为你要爬取的网页URL
 
 
 def clean_filename(title, url):
