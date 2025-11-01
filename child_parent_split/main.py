@@ -1,6 +1,9 @@
 import json
 
-str = """
+str1 = """
+# asdadsas 
+asdasd
+
 ## 1. 项目概述
 本项目旨在构建一个高效、可扩展的知识管理系统，用于企业内部文档的结构化处理与智能检索。
 
@@ -103,13 +106,50 @@ str2 = """
 """
 
 str3 = """
-## 1. 项目概述
-本项目旨在构建一个高效、可扩展的知识管理系统，用于企业内部文档的结构化处理与智能检索。
+文件内容为: # 成都恒图科技有限责任公司 “一企业一方案”  
+
+为贯彻落实《成都市人工智能产业高质量发展三年行动计划（2024—2026年）》《2025年成都市人工智能与机器人百强企业培育计划》，结合成都恒图科技优化产业链生态，力争进入人工智能全国百强企业行列。  
+
+## 一、企业诉求  
+
+根据公司提出的主要诉求，结合其发展现状和未来规划，列出以下关键诉求点。  
+
+一是供需对接。公司期望与上游企业华为、海光、燧原科技、百度、腾讯、智算中心等进行友好对接，同时与下游媒体、文旅、教育、体育等应用客户加强合作。  
+
+二是场景开放。公司希望协调开放教育、文创文旅、影视等应用场景机会或场景试点，以进一步拓展公司产品和解决方案的应用范围。  
+
+三是科研经费支持。公司拟开展服务于创意视觉内容生产全流程的多模态AI Agent研制与应用服务平台研发，需要获得省、市级重大专项的支持及申报指导。  
+
+四是产学研合作。公司期望与国内外著名高校达成产学研深度合作，共同攻关人工智能领域项目
+
 """
 
-from test import split_file
+from test3 import split_file
 
-a = split_file(str3)
+# 读取Az9P.md文件
+file_path = "/Users/lichengxiang/Documents/Coding/PythonCode/Az9P.md"
+with open(file_path, "r", encoding="utf-8") as f:
+    az9p_content = f.read()
 
-print(json.dumps(a, ensure_ascii=False, indent=2))
-# print(a)
+print("正在处理Az9P.md文件...")
+print(f"文件总字符数: {len(az9p_content)}")
+print("=" * 50)
+
+# 调用split_file函数进行切分
+result = split_file(az9p_content)
+
+print(f"\n切分完成，共生成 {len(result)} 个文档块")
+print("=" * 50)
+
+# 输出结果
+print("\n切分结果:")
+print(json.dumps(result, ensure_ascii=False, indent=4))
+
+# 统计父文档和子文档数量
+# parent_count = sum(1 for item in result if item["pid"] == -1)
+# child_count = sum(1 for item in result if item["pid"] != -1)
+# print("\n=" * 50)
+# print("统计信息:")
+# print(f"父文档数量: {parent_count}")
+# print(f"子文档数量: {child_count}")
+# print(f"总文档数量: {len(result)}")
